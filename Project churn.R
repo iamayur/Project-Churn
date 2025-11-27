@@ -1,7 +1,7 @@
-install.packages(c(
-  "tidyverse","tidymodels","janitor","skimr","here","vip",
-  "ranger","xgboost","themis","yardstick","DALEX","glmnet",
-  "shiny","plumber","readr","rsample"
+# install.packages(c(
+#  "tidyverse","tidymodels","janitor","skimr","here","vip",
+#  "ranger","xgboost","themis","yardstick","DALEX","glmnet",
+ # "shiny","plumber","readr","rsample"
 ))
 raw_dir <- "/Users/mayurkalpe/Downloads/Projects/Project-Churn/data/raw"
 list.files(raw_dir, recursive = FALSE)
@@ -87,8 +87,19 @@ as_of_test <- seq(ymd("2024-11-01"), ymd("2024-12-01"), by = "1 month")
 lookback_days <- 90
 label_days <- 30
 
+cat("Snapshots set.\n",
+    "Train:", paste(as_of_train, collapse= ", "), "\n",
+    "Val:", paste(as_of_val), "\n",
+    "Test:", paste(as_of_test, collapse = ", "), "\n\n")
 
-
+#find the common account identifier (Join key)
+common_cols <- Reduce(intersect, lapply(list(accounts, subs, usage, tickets, churn_ev), names))
+#Heuristic: prefer something like account_id/customer_id
+pref <- c("account_id", "customer_id", "acct_id", "id", "account")
+key_candidates <- intersect(pref, common_cols)
+if (length(key_candidates) == 0) 
+  key_candidates <- common_cols[grepl("account|customer|acct|id", common_cols)]
+cat("key candidates:", paste(key_candidates, collapse = ", "), "\n")
 
 
 
