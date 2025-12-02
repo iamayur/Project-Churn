@@ -10,9 +10,9 @@
 
 library(tidyverse) #For data wrangling / visualisation- dplyr, ggplot2, readr,etc, pipe (%>%), mutate, group_by, summarise
 library(lubridate) #To use date/time format- ymd_hms, as_date, etc
-library(tidymodels) 
-library(janitor)
-library(ranger)
+library(tidymodels) #for modelling, preprocessing, recipes
+library(janitor) # Cleaning functions and basic tabulations like clean_names
+library(ranger) #Fast implementation of random forests
 library(xgboost)
 
 tidymodels_prefer()  # helps avoid conflicts
